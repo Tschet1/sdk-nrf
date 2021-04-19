@@ -45,3 +45,7 @@
   - "modules/tfm/**/*"
   - "samples/tfm/**/*"
 
+"CI-ble-test":
+  - "subsys/bluetooth/**/*"
+  - "include/bluetooth/**/*"
+  - "samples/bluetooth/**/*"
