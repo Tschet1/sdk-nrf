@@ -44,6 +44,7 @@
 "CI-tfm-test":
   - "modules/tfm/**/*"
   - "samples/tfm/**/*"
+  - "tests/subsys/spm/secure_services/**/*"
 
 "CI-ble-test":
   - "subsys/bluetooth/**/*"
