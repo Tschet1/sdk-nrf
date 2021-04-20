@@ -49,3 +49,9 @@
   - "subsys/bluetooth/**/*"
   - "include/bluetooth/**/*"
   - "samples/bluetooth/**/*"
+
+"CI-mesh-test":
+  - "subsys/bluetooth/mesh/**/*"
+  - "include/bluetooth/mesh/**/*"
+  - "tests/subsys/bluetooth/mesh/**/*"
+
