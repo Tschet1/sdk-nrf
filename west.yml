@@ -20,6 +20,8 @@ manifest:
   remotes:
     # nRF Connect SDK GitHub organization.
     # NCS repositories are hosted here.
+    - name: Tschet1
+      url-base: https://github.com/Tschet1
     - name: ncs
       url-base: https://github.com/nrfconnect
     # Third-party repository sources:
@@ -35,8 +37,6 @@ manifest:
       url-base: https://github.com/alexa
     - name: nordicsemi
       url-base: https://github.com/NordicSemiconductor
-    - name: Tschet1
-      url-base: https://github.com/Tschet1
 
   # If not otherwise specified, the projects below should be obtained
   # from the ncs remote.
