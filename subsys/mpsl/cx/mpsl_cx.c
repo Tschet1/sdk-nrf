@@ -10,12 +10,19 @@
 #if IS_ENABLED(CONFIG_MPSL_CX_THREAD)
 #include <mpsl/mpsl_cx_config_thread.h>
 
+#if DT_HAS_COMPAT_STATUS_OKAY(generic_radio_coex_three_wire)
+#define CX_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(generic_radio_coex_three_wire)
+#else
+#define CX_NODE DT_INVALID_NODE
+#error No "generic-radio-coex-three-wire"-compatible (and enabled) nodes found
+#endif
+
 static int cx_thread_configure(void)
 {
 	struct mpsl_cx_thread_interface_config cfg = {
-		.request_pin  = CONFIG_MPSL_CX_THREAD_PIN_REQUEST,
-		.priority_pin = CONFIG_MPSL_CX_THREAD_PIN_PRIORITY,
-		.granted_pin  = CONFIG_MPSL_CX_THREAD_PIN_GRANT,
+		.request_pin  = DT_GPIO_PIN(CX_NODE, req_gpios),
+		.priority_pin = DT_GPIO_PIN(CX_NODE, pri_dir_gpios),
+		.granted_pin  = DT_GPIO_PIN(CX_NODE, grant_gpios),
 	};
 
 	return mpsl_cx_thread_interface_config_set(&cfg);
