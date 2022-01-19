@@ -59,6 +59,7 @@ static uint32_t get_timeslot_time_us(void)
 
 static void reschedule_next_timeslot(void)
 {
+	printk("reschedule\n");
 	_context.timeslot_request.params.earliest.priority =
 		MPSL_TIMESLOT_PRIORITY_HIGH;
 
@@ -67,6 +68,7 @@ static void reschedule_next_timeslot(void)
 
 	__ASSERT_EVAL((void)ret, (void)ret, ret == 0,
 		      "mpsl_timeslot_request failed: %d", ret);
+	printk("rescheduled\n");
 }
 
 static mpsl_timeslot_signal_return_param_t *
@@ -75,7 +77,9 @@ timeslot_callback(mpsl_timeslot_session_id_t session_id, uint32_t signal)
 	int rc;
 	__ASSERT_NO_MSG(session_id == _context.session_id);
 
+	printk("Timeslot: signal: %u\n", signal);
 	if (atomic_get(&_context.timeout_occured)) {
+		printk("Timeout occurred\n");
 		return NULL;
 	}
 
@@ -83,10 +87,12 @@ timeslot_callback(mpsl_timeslot_session_id_t session_id, uint32_t signal)
 	case MPSL_TIMESLOT_SIGNAL_START:
 		rc = _context.op_desc->handler(_context.op_desc->context);
 		if (rc != FLASH_OP_ONGOING) {
+			printk("Timeslot: cont\n");
 			_context.status = (rc == FLASH_OP_DONE) ? 0 : rc;
 			_context.return_param.callback_action =
 				MPSL_TIMESLOT_SIGNAL_ACTION_END;
 		} else {
+			printk("Timeslot: done\n");
 			/* Reset the priority back to normal after a successful
 			 * timeslot. */
 			_context.timeslot_request.params.earliest.priority =
@@ -143,11 +149,13 @@ int nrf_flash_sync_exe(struct flash_op_desc *op_desc)
 {
 	LOG_DBG("");
 
+	printk("Timeslot open\n");
 	int errcode = MULTITHREADING_LOCK_ACQUIRE();
 	__ASSERT_NO_MSG(errcode == 0);
 	int32_t ret = mpsl_timeslot_session_open(timeslot_callback,
 						 &_context.session_id);
 	MULTITHREADING_LOCK_RELEASE();
+	printk("Timeslot opened\n");
 
 	if (ret < 0) {
 		LOG_ERR("mpsl_timeslot_session_open failed: %d", ret);
