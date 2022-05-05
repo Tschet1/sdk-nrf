@@ -388,12 +388,14 @@ static void dm_thread(void)
 			case TIMESLOT_NORMAL_END:
 				dm_reschedule();
 				if (dm_context.ranging_status) {
-					nrf_dm_calc();
+					nrf_dm_report_t report;
+					nrf_dm_populate_report(&report);
+					nrf_dm_calc(&report);
+					//TODO: incorporate the high precision calc
+					//nrf_dm_high_precision_calc(&report);
+					process_data(&report);
 				}
 
-				const nrf_dm_report_t *dm_proc_data = nrf_dm_report_get();
-
-				process_data(dm_proc_data);
 				if (dm_context.cb->data_ready != NULL) {
 					dm_context.cb->data_ready(&result);
 				}

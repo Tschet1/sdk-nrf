@@ -42,7 +42,7 @@ config DM_TIMESLOT_RESCHEDULE
 
 config DM_INITIATOR_DELAY_US
 	int "Initiator start delay"
-	default 4000
+	default 1000
 	help
 	  "Additional Initiator Start delay time. Used to improve synchronization."
 
@@ -54,7 +54,7 @@ config DM_REFLECTOR_DELAY_US
 
 config DM_INITIATOR_RANGING_WINDOW_US
 	int "Initiator ranging window"
-	default 19000
+	default 22000
 	help
 	  "Time for ranging required by initiator role."
 
