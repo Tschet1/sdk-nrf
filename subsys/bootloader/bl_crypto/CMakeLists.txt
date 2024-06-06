@@ -6,8 +6,8 @@
 
 zephyr_library()
 zephyr_library_sources(bl_crypto.c)
-zephyr_library_link_libraries(nrfxlib_crypto)
-zephyr_link_libraries(nrfxlib_crypto)
+#zephyr_library_link_libraries(nrfxlib_crypto)
+#zephyr_link_libraries(nrfxlib_crypto)
 
 if (CONFIG_SB_CRYPTO_OBERON_ECDSA_SECP256R1)
   zephyr_library_sources(bl_crypto_oberon_ecdsa.c)

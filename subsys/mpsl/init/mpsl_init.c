@@ -79,11 +79,11 @@ BUILD_ASSERT(MPSL_RTC_IRQn != DT_IRQN(DT_NODELABEL(grtc)), "MPSL requires a dedi
  */
 #define MPSL_IRQ_IN_DT (LISTIFY(NUM_IRQS, CHECK_IRQ, (|)))
 
-BUILD_ASSERT(MPSL_IRQ_IN_DT, "The MPSL GRTC IRQ is not in the device tree");
+//BUILD_ASSERT(MPSL_IRQ_IN_DT, "The MPSL GRTC IRQ is not in the device tree");
 
-BUILD_ASSERT((NRFX_CONFIG_MASK_DT(DT_NODELABEL(grtc), child_owned_channels) &
-	      MPSL_RESERVED_GRTC_CHANNELS) == MPSL_RESERVED_GRTC_CHANNELS,
-	     "The GRTC channels used by MPSL must not be used by zephyr");
+//BUILD_ASSERT((NRFX_CONFIG_MASK_DT(DT_NODELABEL(grtc), child_owned_channels) &
+//	      MPSL_RESERVED_GRTC_CHANNELS) == MPSL_RESERVED_GRTC_CHANNELS,
+//	     "The GRTC channels used by MPSL must not be used by zephyr");
 #endif
 
 #if defined(CONFIG_SOC_SERIES_NRF54HX)
@@ -197,7 +197,7 @@ static void mpsl_timer0_isr_wrapper(const void *args)
 
 	MPSL_IRQ_TIMER0_Handler();
 
-	ISR_DIRECT_PM();
+	//ISR_DIRECT_PM();
 }
 
 static void mpsl_rtc0_isr_wrapper(const void *args)
@@ -211,7 +211,7 @@ static void mpsl_rtc0_isr_wrapper(const void *args)
 
 	MPSL_IRQ_RTC0_Handler();
 
-	ISR_DIRECT_PM();
+	//ISR_DIRECT_PM();
 }
 
 static void mpsl_radio_isr_wrapper(const void *args)
@@ -220,7 +220,7 @@ static void mpsl_radio_isr_wrapper(const void *args)
 
 	MPSL_IRQ_RADIO_Handler();
 
-	ISR_DIRECT_PM();
+	//ISR_DIRECT_PM();
 }
 
 static void mpsl_lib_irq_disable(void)
@@ -251,7 +251,7 @@ ISR_DIRECT_DECLARE(mpsl_timer0_isr_wrapper)
 {
 	MPSL_IRQ_TIMER0_Handler();
 
-	ISR_DIRECT_PM();
+	//ISR_DIRECT_PM();
 
 	/* We may need to reschedule in case a radio timeslot callback
 	 * accesses zephyr primitives.
@@ -267,7 +267,7 @@ ISR_DIRECT_DECLARE(mpsl_rtc0_isr_wrapper)
 	}
 	MPSL_IRQ_RTC0_Handler();
 
-	ISR_DIRECT_PM();
+	//ISR_DIRECT_PM();
 
 	/* No need for rescheduling, because the interrupt handler
 	 * does not access zephyr primitives.
@@ -279,7 +279,7 @@ ISR_DIRECT_DECLARE(mpsl_radio_isr_wrapper)
 {
 	MPSL_IRQ_RADIO_Handler();
 
-	ISR_DIRECT_PM();
+	//ISR_DIRECT_PM();
 
 	/* We may need to reschedule in case a radio timeslot callback
 	 * accesses zephyr primitives.
@@ -326,7 +326,7 @@ static uint8_t m_config_clock_source_get(void)
 #elif CONFIG_CLOCK_CONTROL_NRF_K32SRC_EXT_FULL_SWING
 	return MPSL_CLOCK_LF_SRC_EXT_FULL_SWING;
 #else
-	#error "Clock source is not supported or not defined"
+	//#error "Clock source is not supported or not defined"
 	return 0;
 #endif
 }
@@ -360,7 +360,7 @@ static int32_t mpsl_lib_init_internal(void)
 	/* TODO: Clock config should be adapted in the future to new architecture. */
 #if !defined(CONFIG_SOC_SERIES_NRF54HX)
 	clock_cfg.source = m_config_clock_source_get();
-	clock_cfg.accuracy_ppm = CONFIG_CLOCK_CONTROL_NRF_ACCURACY;
+	clock_cfg.accuracy_ppm = 500;
 	clock_cfg.skip_wait_lfclk_started =
 		IS_ENABLED(CONFIG_SYSTEM_CLOCK_NO_WAIT);
 

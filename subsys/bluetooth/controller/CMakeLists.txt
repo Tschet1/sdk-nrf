@@ -21,10 +21,10 @@ zephyr_library_sources_ifdef(
   ecdh.c
 )
 
-zephyr_library_link_libraries_ifdef(
-  CONFIG_BT_CTLR_ECDH_LIB_OBERON
-  nrfxlib_crypto
-)
+#zephyr_library_link_libraries_ifdef(
+#  CONFIG_BT_CTLR_ECDH_LIB_OBERON
+#  nrfxlib_crypto
+#)
 
 zephyr_library_link_libraries(subsys__bluetooth)
 

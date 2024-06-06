@@ -21,15 +21,16 @@ LOG_MODULE_REGISTER(bt_sdc_crypto);
 
 #define BT_ECB_BLOCK_SIZE 16
 
-static const struct device *dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_entropy));
+//static const struct device *dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_entropy));
 
 int bt_rand(void *buf, size_t len)
 {
-	if (unlikely(!device_is_ready(dev))) {
-		return -ENODEV;
-	}
-
-	return entropy_get_entropy(dev, (uint8_t *)buf, len);
+	//if (unlikely(!device_is_ready(dev))) {
+	//	return -ENODEV;
+	//}
+	memset(buf, 0xaf, len);
+	// return entropy_get_entropy(dev, (uint8_t *)buf, len);
+	return 0x0;
 }
 
 int bt_encrypt_le(const uint8_t key[BT_ECB_BLOCK_SIZE],

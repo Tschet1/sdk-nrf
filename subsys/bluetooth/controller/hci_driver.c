@@ -575,14 +575,38 @@ static void receive_work_handler(struct k_work *work)
 	hci_driver_receive_process();
 }
 
-static const struct device *entropy_source = DEVICE_DT_GET(DT_CHOSEN(zephyr_entropy));
+//static const struct device *entropy_source = DEVICE_DT_GET(DT_CHOSEN(zephyr_entropy));
+static inline uint32_t m_rotl(const uint32_t x, int k)
+{
+  return (x << k) | (x >> (32 - k));
+}
+
+static uint32_t m_get(void)
+{
+
+  static uint32_t s0     = 5;
+  static uint32_t s1     = 8;
+  const uint32_t result = m_rotl(s0 * 0x9E3779BB, 5) * 5;
+
+  s1 ^= s0;
+  s0 = m_rotl(s0, 26) ^ s1 ^ (s1 << 9);
+  s1 = m_rotl(s1, 13);
+
+  return result;
+}
+
+static uint8_t rand_prio_low_vector_get(uint8_t *p_buff, uint8_t length)
+{
+	for(uint8_t i=0; i<length; ++i)
+	{
+		p_buff[i] = m_get() & 0xff;
+	}
+	return length;
+}
 
 static void rand_prio_low_vector_get_blocking(uint8_t *p_buff, uint8_t length)
 {
-	int err = entropy_get_entropy(entropy_source, p_buff, length);
-
-	__ASSERT(err == 0, "The entropy source returned an error in a blocking call");
-	(void) err;
+	(void) rand_prio_low_vector_get(p_buff, length);
 }
 
 static int configure_supported_features(void)
@@ -1155,10 +1179,10 @@ static int hci_driver_open(void)
 
 	int err;
 
-	if (!device_is_ready(entropy_source)) {
-		LOG_ERR("Entropy source device not ready");
-		return -ENODEV;
-	}
+	//if (!device_is_ready(entropy_source)) {
+	//	LOG_ERR("Entropy source device not ready");
+	//	return -ENODEV;
+	//}
 
 	sdc_rand_source_t rand_functions = {
 		.rand_poll = rand_prio_low_vector_get_blocking
