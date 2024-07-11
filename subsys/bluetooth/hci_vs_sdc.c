@@ -259,6 +259,15 @@ int hci_vs_sdc_get_next_conn_event_counter(
 				   return_params, sizeof(*return_params));
 }
 
+int hci_vs_sdc_get_conn_event_anchor(
+	const sdc_hci_cmd_vs_get_conn_event_anchor_t *params,
+	sdc_hci_cmd_vs_get_conn_event_anchor_return_t *return_params)
+{
+	return hci_vs_cmd_with_rsp(SDC_HCI_OPCODE_CMD_VS_GET_CONN_EVENT_ANCHOR,
+				   params, sizeof(*params),
+				   return_params, sizeof(*return_params));
+}
+
 int hci_vs_sdc_allow_parallel_connection_establishments(
 	const sdc_hci_cmd_vs_allow_parallel_connection_establishments_t *params)
 {

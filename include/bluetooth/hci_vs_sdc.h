@@ -296,6 +296,10 @@ int hci_vs_sdc_get_next_conn_event_counter(
 	const sdc_hci_cmd_vs_get_next_conn_event_counter_t *params,
 	sdc_hci_cmd_vs_get_next_conn_event_counter_return_t *return_params);
 
+int hci_vs_sdc_get_conn_event_anchor(
+	const sdc_hci_cmd_vs_get_conn_event_anchor_t *params,
+	sdc_hci_cmd_vs_get_conn_event_anchor_return_t *return_params);
+
 /** @brief Allow Parallel Connection Establishment.
  *
  * For the complete API description, see sdc_hci_cmd_vs_allow_parallel_connection_establishments().

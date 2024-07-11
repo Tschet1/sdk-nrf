@@ -1634,6 +1634,12 @@ static uint8_t vs_cmd_put(uint8_t const *const cmd, uint8_t *const raw_event_out
 		return sdc_hci_cmd_vs_get_next_conn_event_counter((void *)cmd_params,
 							    (void *)event_out_params);
 #endif
+#if defined(CONFIG_BT_CONN)
+	case SDC_HCI_OPCODE_CMD_VS_GET_CONN_EVENT_ANCHOR:
+		*param_length_out += sizeof(sdc_hci_cmd_vs_get_conn_event_anchor_return_t);
+		return sdc_hci_cmd_vs_get_conn_event_anchor((void *)cmd_params,
+							    (void *)event_out_params);
+#endif
 #if defined(CONFIG_BT_CTLR_SDC_PAWR_ADV)
 	case SDC_HCI_OPCODE_CMD_VS_ALLOW_PARALLEL_CONNECTION_ESTABLISHMENTS:
 		return sdc_hci_cmd_vs_allow_parallel_connection_establishments((void *)cmd_params);
