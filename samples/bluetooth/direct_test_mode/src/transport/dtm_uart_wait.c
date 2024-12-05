@@ -73,7 +73,8 @@ int dtm_uart_wait_init(void)
 	err = nrfx_timer_init(&wait_timer, &timer_cfg, wait_timer_handler);
 	if (err != NRFX_SUCCESS) {
 		LOG_ERR("nrfx_timer_init failed with: %d", err);
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	IRQ_CONNECT(WAIT_TIMER_IRQ, CONFIG_DTM_TIMER_IRQ_PRIORITY,

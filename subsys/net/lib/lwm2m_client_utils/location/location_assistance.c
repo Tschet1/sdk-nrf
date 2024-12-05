@@ -80,7 +80,8 @@ static int gnss_assintace_request_prepare(void)
 
 	if (location_assist_gnss_is_busy()) {
 		LOG_WRN("GNSS object busy handling request");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	gnss_retry_info.retry_seconds = LOCATION_ASSISTANT_INITIAL_RETRY_INTERVAL;
@@ -256,7 +257,8 @@ int location_assistance_agnss_set_mask(const struct nrf_modem_gnss_agnss_data_fr
 
 	if (location_assist_gnss_is_busy()) {
 		LOG_WRN("GNSS object busy handling request");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	location_assist_gnss_type_set(ASSISTANCE_REQUEST_TYPE_AGNSS);

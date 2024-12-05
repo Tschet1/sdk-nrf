@@ -184,7 +184,8 @@ static int at_parser_tok(struct at_parser *parser, struct at_token *token)
 	/* Stop if there is a new line to parse. */
 	if (lookahead_cr_lf_and_more(parser->cursor) ||
 	    lookahead_crlf_and_more(parser->cursor)) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	if (parser->count == 0) {

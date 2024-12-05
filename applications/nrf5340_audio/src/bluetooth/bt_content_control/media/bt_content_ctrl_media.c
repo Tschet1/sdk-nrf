@@ -409,7 +409,8 @@ int bt_content_ctrl_media_play(struct bt_conn *conn)
 
 	if (media_player_state == BT_MCS_MEDIA_STATE_PLAYING) {
 		LOG_WRN("Already in a playing state");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	cmd.opcode = BT_MCS_OPC_PLAY;
@@ -436,7 +437,8 @@ int bt_content_ctrl_media_pause(struct bt_conn *conn)
 
 	if (media_player_state == BT_MCS_MEDIA_STATE_PAUSED) {
 		LOG_WRN("Already in a paused state");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	cmd.opcode = BT_MCS_OPC_PAUSE;

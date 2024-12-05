@@ -465,7 +465,8 @@ static int ping_test_handler(const char *target)
 	if (ret != 0) {
 		LOG_ERR("getaddrinfo(dest) error: %d", ret);
 		rsp_send("\"%s\"\r\n", gai_strerror(ret));
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	/* Use the first result to decide which address family to use */

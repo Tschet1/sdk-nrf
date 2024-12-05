@@ -745,7 +745,8 @@ int fota_download_cancel(void)
 	if (!atomic_test_bit(&flags, FLAG_DOWNLOADING)) {
 		/* Download not started, aborted or completed */
 		LOG_WRN("%s invalid state", __func__);
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	atomic_set_bit(&flags, FLAG_CANCEL);

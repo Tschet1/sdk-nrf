@@ -393,7 +393,8 @@ static int at_parse_param(const char **at_params_str,
 	}
 
 	if (!is_terminated(*str) && !is_result(str)) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	return 0;

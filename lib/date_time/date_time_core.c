@@ -77,7 +77,8 @@ static int date_time_core_schedule_work(int interval)
 
 	if (atomic_set(&reschedule_blocked, true)) {
 		LOG_DBG("Requested date-time update not scheduled, another is already scheduled");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	k_work_reschedule_for_queue(&date_time_work_q, &date_time_update_work, K_SECONDS(interval));
@@ -237,7 +238,8 @@ int date_time_core_now_local(int64_t *local_time_ms)
 	int err;
 
 	if (date_time_tz == DATE_TIME_TZ_INVALID) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	err = date_time_core_now(local_time_ms);

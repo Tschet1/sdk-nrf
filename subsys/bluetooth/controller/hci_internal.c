@@ -899,7 +899,8 @@ static void le_read_supported_states(uint8_t *buf)
 int hci_internal_user_cmd_handler_register(const hci_internal_user_cmd_handler_t handler)
 {
 	if (user_cmd_handler) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	user_cmd_handler = handler;

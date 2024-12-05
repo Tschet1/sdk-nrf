@@ -565,7 +565,8 @@ int bt_mesh_time_srv_status(struct bt_mesh_time_srv *srv, uint64_t uptime,
 {
 	if ((srv->data.sync.uptime > uptime) ||
 	    tai_is_unknown(&srv->data.sync.status.tai)) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	status->tai = tai_at(srv, uptime),
@@ -650,7 +651,8 @@ uint64_t bt_mesh_time_srv_uncertainty_get(struct bt_mesh_time_srv *srv,
 				       int64_t uptime)
 {
 	if ((uptime - srv->data.sync.uptime) < 0) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	return get_uncertainty_ms(srv, uptime);

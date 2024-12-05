@@ -80,7 +80,8 @@ int timeslot_queue_append(struct dm_request *req, uint32_t start_ref_tick,
 
 	if (list_size != 0) {
 		if (is_request_exist(req)) {
-			return -EAGAIN;
+			printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 		}
 
 		/* Check that the new timeslot does not overlap with a previous one.

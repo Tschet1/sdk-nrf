@@ -198,7 +198,8 @@ static int tnep_data_analyze(const struct nfc_ndef_msg_desc *msg,
 
 	LOG_DBG("Message does not have any status record");
 
-	return -EAGAIN;
+	printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 }
 
 static bool service_param_rec_check(uint8_t tnf, const uint8_t *type, uint8_t length)

@@ -481,7 +481,8 @@ int slm_ppp_init(void)
 {
 #if !defined(CONFIG_SLM_CMUX)
 	if (!device_is_ready(ppp_uart_dev)) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	{

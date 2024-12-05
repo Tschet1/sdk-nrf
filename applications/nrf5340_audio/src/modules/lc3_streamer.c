@@ -367,7 +367,8 @@ int lc3_streamer_stream_register(const char *const filename, uint8_t *const stre
 
 	if (!free_slot_found) {
 		LOG_ERR("No stream slot is available");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	ret = lc3_file_open(&streams[*streamer_idx].file, filename);

@@ -665,7 +665,8 @@ static int handle_at_nrf_cloud_pos(enum at_parser_cmd_type cmd_type,
 
 	if (cell_pos == CELLPOS_MULTI_CELL && !nrfcloud_ncellmeas_done) {
 		LOG_ERR("%s", "No neighboring cell measurement. Did you run `AT%NCELLMEAS`?");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	if (!wifi_pos && param_count > WIFI_APS_BEGIN_IDX) {

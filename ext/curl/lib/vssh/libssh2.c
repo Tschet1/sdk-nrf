@@ -3049,7 +3049,8 @@ static ssize_t ssh_tls_recv(libssh2_socket_t sock, void *buffer,
 
   result = Curl_read(conn, sock, buffer, length, &nread);
   if(result == CURLE_AGAIN)
-    return -EAGAIN; /* magic return code for libssh2 */
+    printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN; /* magic return code for libssh2 */
   else if(result)
     return -1; /* generic error */
   if(conn->data->set.verbose)
@@ -3067,7 +3068,8 @@ static ssize_t ssh_tls_send(libssh2_socket_t sock, const void *buffer,
 
   result = Curl_write(conn, sock, buffer, length, &nwrite);
   if(result == CURLE_AGAIN)
-    return -EAGAIN; /* magic return code for libssh2 */
+    printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN; /* magic return code for libssh2 */
   else if(result)
     return -1; /* error */
   if(conn->data->set.verbose)

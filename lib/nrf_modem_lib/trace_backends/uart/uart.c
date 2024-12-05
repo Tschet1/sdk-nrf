@@ -170,7 +170,8 @@ out:
 	k_sem_give(&tx_sem);
 
 	if (ret == 0) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	return ret;

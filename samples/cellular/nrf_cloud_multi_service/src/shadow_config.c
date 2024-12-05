@@ -145,7 +145,8 @@ int shadow_config_delta_process(struct nrf_cloud_obj *const delta_obj)
 	 * This is only a concern for MQTT.
 	 */
 	if (!accepted_rcvd && IS_ENABLED(CONFIG_NRF_CLOUD_MQTT)) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	int err;

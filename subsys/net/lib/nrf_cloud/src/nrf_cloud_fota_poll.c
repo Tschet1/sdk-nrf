@@ -611,7 +611,8 @@ int nrf_cloud_fota_poll_process(struct nrf_cloud_fota_poll_ctx *ctx)
 	} else if (err > 0) {
 		/* No job. */
 		cleanup();
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	if (ctx_ptr->status_fn) {

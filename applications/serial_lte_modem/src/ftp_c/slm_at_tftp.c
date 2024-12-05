@@ -52,7 +52,8 @@ static int do_tftp_get(int family, const char *server, uint16_t port, const char
 	};
 	ret = util_resolve_host(0, server, port, family, &client.server);
 	if (ret) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	ret = tftp_get(&client, filepath, mode);
@@ -95,7 +96,8 @@ static int do_tftp_put(int family, const char *server, uint16_t port, const char
 
 	ret = util_resolve_host(0, server, port, family, &client.server);
 	if (ret) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	ret = tftp_put(&client, filepath, mode, data, datalen);

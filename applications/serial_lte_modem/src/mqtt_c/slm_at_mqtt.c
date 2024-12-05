@@ -306,7 +306,8 @@ static int broker_init(void)
 
 	err = util_resolve_host(0, mqtt_broker_url, mqtt_broker_port, ctx.family, &sa);
 	if (err) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 	if (sa.sa_family == AF_INET) {
 		ctx.broker = *(struct sockaddr_in *)&sa;

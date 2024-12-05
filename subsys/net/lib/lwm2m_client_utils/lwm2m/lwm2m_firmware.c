@@ -722,12 +722,14 @@ static int firmware_block_received_cb(uint16_t obj_inst_id, uint16_t res_id, uin
 	if (bytes_downloaded == 0 && offset == 0) {
 		if (ongoing_obj_id != UNUSED_OBJ_ID) {
 			LOG_INF("DFU is allocated already");
-			return -EAGAIN;
+			printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 		}
 
 		if (is_duplicate_token()) {
 			LOG_DBG("Duplicate token, don't restart DFU");
-			return -EAGAIN;
+			printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 		}
 
 		ongoing_obj_id = obj_inst_id;

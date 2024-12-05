@@ -98,7 +98,8 @@ int fake_data_fifo_pointer_first_vacant_get__no_wait_fails(struct data_fifo *dat
 	ARG_UNUSED(data);
 	ARG_UNUSED(timeout);
 
-	return -EAGAIN;
+	printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 }
 
 int fake_data_fifo_pointer_first_vacant_get__invalid_fails(struct data_fifo *data_fifo, void **data,
@@ -197,7 +198,8 @@ int fake_data_fifo_pointer_last_filled_get__timeout_fails(struct data_fifo *data
 	ARG_UNUSED(size);
 	ARG_UNUSED(timeout);
 
-	return -EAGAIN;
+	printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 }
 
 void fake_data_fifo_block_free__succeeds(struct data_fifo *data_fifo, void *data)
@@ -285,7 +287,8 @@ int fake_data_fifo_empty__timeout_fails(struct data_fifo *data_fifo)
 {
 	ARG_UNUSED(data_fifo);
 
-	return -EAGAIN;
+	printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 }
 
 int fake_data_fifo_uninit__succeeds(struct data_fifo *data_fifo)

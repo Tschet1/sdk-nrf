@@ -296,7 +296,8 @@ static int do_ftp_recv_ctrl(bool post_result, int success_code)
 	if ((fds[0].revents & POLLIN) != POLLIN) {
 		LOG_ERR("POLL 0x%08x", fds[0].revents);
 		close_connection(FTP_CODE_904, -EAGAIN);
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 	ret = recv(client.cmd_sock, ctrl_buf, sizeof(ctrl_buf), 0);
 	if (ret <= 0) {

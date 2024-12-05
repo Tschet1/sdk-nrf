@@ -21,7 +21,8 @@ int ts_to_tai(struct bt_mesh_time_tai *tai, const struct tm *timeptr)
 	uint32_t days = 0;
 
 	if (current_year < TAI_START_YEAR) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	for (int year = TAI_START_YEAR; year < current_year; year++) {

@@ -27,7 +27,8 @@ inline __attribute__((always_inline)) int sx_err2errno(int sx_err)
 		return -EBUSY;
 	case SX_ERR_RETRY:
 		/* Waiting on the hardware to process this operation */
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	case SX_ERR_INCOMPATIBLE_HW:
 		/**
 		 * No compatible hardware for this operation.

@@ -230,7 +230,8 @@ int bt_vol_ctlr_discover(struct bt_conn *conn)
 	int ret, index;
 
 	if (vcs_client_peer_exists(conn)) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	index = vcs_client_peer_index_free_get();

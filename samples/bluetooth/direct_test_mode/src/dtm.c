@@ -723,7 +723,8 @@ static int timer_init(void)
 	err = nrfx_timer_init(&dtm_inst.timer, &timer_cfg, dtm_timer_handler);
 	if (err != NRFX_SUCCESS) {
 		printk("nrfx_timer_init failed with: %d\n", err);
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	IRQ_CONNECT(DEFAULT_TIMER_IRQ, CONFIG_DTM_TIMER_IRQ_PRIORITY,
@@ -746,7 +747,8 @@ static int anomaly_timer_init(void)
 			      anomaly_timer_handler);
 	if (err != NRFX_SUCCESS) {
 		printk("nrfx_timer_init failed with: %d\n", err);
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	IRQ_CONNECT(ANOMALY_172_TIMER_IRQ,
@@ -771,7 +773,8 @@ static int gppi_init(void)
 	err = nrfx_gppi_channel_alloc(&dtm_inst.ppi_radio_start);
 	if (err != NRFX_SUCCESS) {
 		printk("nrfx_gppi_channel_alloc failed with: %d\n", err);
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	return 0;

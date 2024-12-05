@@ -605,7 +605,8 @@ static int do_connect(const char *url, uint16_t port)
 	LOG_DBG("connect %s:%d", url, port);
 	ret = util_resolve_host(sock.cid, url, port, sock.family, &sa);
 	if (ret) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 	if (sa.sa_family == AF_INET) {
 		ret = connect(sock.fd, &sa, sizeof(struct sockaddr_in));
@@ -798,7 +799,8 @@ static int do_sendto(const char *url, uint16_t port, const uint8_t *data, int da
 	LOG_DBG("sendto %s:%d", url, port);
 	ret = util_resolve_host(sock.cid, url, port, sock.family, &sa);
 	if (ret) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	while (offset < datalen) {
@@ -836,7 +838,8 @@ static int do_sendto_datamode(const uint8_t *data, int datalen)
 	LOG_DBG("sendto %s:%d", udp_url, udp_port);
 	ret = util_resolve_host(sock.cid, udp_url, udp_port, sock.family, &sa);
 	if (ret) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	uint32_t offset = 0;
@@ -936,12 +939,14 @@ static int socket_poll(int sock_fd, int event, int timeout)
 		return -errno;
 	} else if (ret == 0) {
 		LOG_WRN("poll() timeout");
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	LOG_DBG("poll() events 0x%08x", fd.revents);
 	if ((fd.revents & event) != event) {
-		return -EAGAIN;
+		printk("FAILED: %s:%u\n", __FILE_NAME__, __LINE__);
+return -EAGAIN;
 	}
 
 	return 0;
