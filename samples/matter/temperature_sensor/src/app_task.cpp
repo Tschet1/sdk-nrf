@@ -11,10 +11,16 @@
 #include "board/board.h"
 #include "clusters/identify.h"
 #include "lib/core/CHIPError.h"
+#include <drivers/include/nrfx_temp.h>
 
 #include <app-common/zap-generated/attributes/Accessors.h>
 
 #include <zephyr/logging/log.h>
+
+#include <zephyr/device.h>
+#include <zephyr/drivers/sensor.h>
+
+const struct device *dht = DEVICE_DT_GET_ANY(aosong_dht);
 
 #ifdef CONFIG_BME680
 #include <zephyr/drivers/sensor.h>
@@ -157,12 +163,37 @@ void AppTask::UpdateTemperatureMeasurement()
 		LOG_ERR("Fetching data from BME688 sensor failed with: %d", result);
 	}
 #else
-	/* Linear temperature increase that is wrapped around to min value after reaching the max value. */
-	if (mCurrentTemperature < mTemperatureSensorMaxValue) {
-		mCurrentTemperature += kTemperatureMeasurementStep;
-	} else {
-		mCurrentTemperature = mTemperatureSensorMinValue;
+	 //mCurrentTemperature = (int16_t) nrfx_temp_calculate(nrfx_temp_result_get()) + 150;
+	 //nrfx_temp_measure();
+
+        struct sensor_value temp, hum;
+
+        int ret = sensor_sample_fetch(dht);
+	if(ret != 0)
+	{
+		LOG_ERR("Error reading sensor %d", ret);
+		return;
 	}
+	ret = sensor_channel_get(dht, SENSOR_CHAN_AMBIENT_TEMP, &temp);
+	if(ret != 0)
+	{
+		LOG_ERR("Error translating temperature %d", ret);
+		return;
+	}
+        ret = sensor_channel_get(dht, SENSOR_CHAN_HUMIDITY, &hum);
+	if(ret != 0)
+	{
+		LOG_ERR("Error translating humidity %d", ret);
+		return;
+	}
+
+	mCurrentTemperature = (int16_t)(temp.val1 * 100 + temp.val2 / 10000);
+	LOG_INF("TEMP 1: %u", temp.val1);
+	LOG_INF("TEMP 2: %u", temp.val2);
+	LOG_INF("HUM 1: %u", hum.val1);
+	LOG_INF("HUM 2: %u", hum.val2);
+	LOG_INF("Temp: %d.%06d C\n", temp.val1, temp.val2);
+	LOG_INF("Humidity: %d.%06d %%\n", hum.val1, hum.val2);
 #endif
 }
 
@@ -214,6 +245,15 @@ CHIP_ERROR AppTask::Init()
 
 CHIP_ERROR AppTask::StartApp()
 {
+	//const nrfx_temp_config_t temp_config = NRFX_TEMP_DEFAULT_CONFIG;
+	//nrfx_temp_init(&temp_config, NULL);
+	//nrfx_temp_measure();
+
+	if (!device_is_ready(dht)) {
+		LOG_ERR("DHT device not ready\n");
+		return CHIP_ERROR_INCORRECT_STATE;
+	}
+
 	ReturnErrorOnFailure(Init());
 
 	DataModel::Nullable<int16_t> val;

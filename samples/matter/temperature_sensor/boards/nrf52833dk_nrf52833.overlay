@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
 
-/ {
-	chosen {
-		nordic,pm-ext-flash = &mx25r64;
-	};
-};
+/// {
+//	chosen {
+//		nordic,pm-ext-flash = &mx25r64;
+//	};
+//};
 
 /* Disable unused peripherals to reduce power consumption */
 &adc {
@@ -43,7 +43,6 @@
     dht22: dht22 {
         compatible = "aosong,dht";
         label = "DHT22";
-        dht22;
-        dio-gpios = <&gpio0 27 (GPIO_ACTIVE_LOW)>;
+        dio-gpios = <&gpio0 27 (GPIO_ACTIVE_HIGH)>;
     };
 };
