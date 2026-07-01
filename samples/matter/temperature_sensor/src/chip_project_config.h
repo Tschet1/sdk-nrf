@@ -14,3 +14,5 @@
  */
 
 #pragma once
+
+#define CHIP_DEVICE_CONFIG_NAME "SchlafzimmerTemperatur"

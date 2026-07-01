@@ -31,12 +31,13 @@ public:
 	void UpdateTemperatureMeasurement();
 
 	int16_t GetCurrentTemperature() const { return mCurrentTemperature; }
+	int16_t GetCurrentHumidity() const { return mCurrentHumidity; }
 
 private:
 	CHIP_ERROR Init();
 	k_timer mTimer;
 
-	static constexpr uint16_t kTemperatureMeasurementIntervalMs = 10000; /* 10 seconds */
+	static constexpr uint16_t kTemperatureMeasurementIntervalMs = 10 * 1000; /* 10 seconds */
 	static constexpr uint16_t kTemperatureMeasurementStep = 100; /* 1 degree Celsius */
 
 	static void UpdateTemperatureTimeoutCallback(k_timer *timer);
@@ -46,4 +47,5 @@ private:
 	int16_t mTemperatureSensorMaxValue = 0;
 	int16_t mTemperatureSensorMinValue = 0;
 	int16_t mCurrentTemperature = 0;
+	int16_t mCurrentHumidity = 0;
 };

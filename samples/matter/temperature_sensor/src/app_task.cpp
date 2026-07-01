@@ -171,7 +171,7 @@ void AppTask::UpdateTemperatureMeasurement()
         int ret = sensor_sample_fetch(dht);
 	if(ret != 0)
 	{
-		LOG_ERR("Error reading sensor %d", ret);
+		//LOG_ERR("Error reading sensor %d", ret);
 		return;
 	}
 	ret = sensor_channel_get(dht, SENSOR_CHAN_AMBIENT_TEMP, &temp);
@@ -188,12 +188,13 @@ void AppTask::UpdateTemperatureMeasurement()
 	}
 
 	mCurrentTemperature = (int16_t)(temp.val1 * 100 + temp.val2 / 10000);
-	LOG_INF("TEMP 1: %u", temp.val1);
-	LOG_INF("TEMP 2: %u", temp.val2);
-	LOG_INF("HUM 1: %u", hum.val1);
-	LOG_INF("HUM 2: %u", hum.val2);
-	LOG_INF("Temp: %d.%06d C\n", temp.val1, temp.val2);
-	LOG_INF("Humidity: %d.%06d %%\n", hum.val1, hum.val2);
+	mCurrentHumidity = (int16_t)(hum.val1 * 100 + hum.val2 / 10000);
+	//LOG_INF("TEMP 1: %u", temp.val1);
+	//LOG_INF("TEMP 2: %u", temp.val2);
+	//LOG_INF("HUM 1: %u", hum.val1);
+	//LOG_INF("HUM 2: %u", hum.val2);
+	//LOG_INF("Temp: %d.%06d C\n", temp.val1, temp.val2);
+	//LOG_INF("Humidity: %d.%06d %%\n", hum.val1, hum.val2);
 #endif
 }
 
@@ -213,6 +214,14 @@ void AppTask::UpdateTemperatureTimeoutCallback(k_timer *timer)
 
 			if (status != Protocols::InteractionModel::Status::Success) {
 				LOG_ERR("Updating temperature measurement failed %x", to_underlying(status));
+			}
+
+			status =
+				Clusters::RelativeHumidityMeasurement::Attributes::MeasuredValue::Set(
+					kTemperatureSensorEndpointId, AppTask::Instance().GetCurrentHumidity());
+
+			if (status != Protocols::InteractionModel::Status::Success) {
+				LOG_ERR("Updating humidity measurement failed %x", to_underlying(status));
 			}
 		},
 		reinterpret_cast<intptr_t>(timer->user_data));
@@ -248,6 +257,7 @@ CHIP_ERROR AppTask::StartApp()
 	//const nrfx_temp_config_t temp_config = NRFX_TEMP_DEFAULT_CONFIG;
 	//nrfx_temp_init(&temp_config, NULL);
 	//nrfx_temp_measure();
+
 
 	if (!device_is_ready(dht)) {
 		LOG_ERR("DHT device not ready\n");
